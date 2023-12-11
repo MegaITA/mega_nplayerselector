@@ -46,8 +46,11 @@ function NPlayerSelector:activate()
                         coords = { x, y } 
                     })
                 end
+                DisableAllControlActions(0)
+                EnableControlAction(0, `INPUT_PUSH_TO_TALK`, true)
             end
             SetNuiFocus(true, true)
+            SetNuiFocusKeepInput(true)
             SendNUIMessage({
                 active = active,
                 positions = playerPositions
