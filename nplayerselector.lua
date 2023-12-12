@@ -30,6 +30,8 @@ end
 local active = false
 function NPlayerSelector:activate()
     active = true
+    SetNuiFocus(true, true)
+    SetNuiFocusKeepInput(true)
     Citizen.CreateThread(function ()
         local ped = PlayerPedId()
         local playerPos = GetEntityCoords(ped)
@@ -46,11 +48,7 @@ function NPlayerSelector:activate()
                         coords = { x, y } 
                     })
                 end
-                DisableAllControlActions(0)
-                EnableControlAction(0, `INPUT_PUSH_TO_TALK`, true)
             end
-            SetNuiFocus(true, true)
-            SetNuiFocusKeepInput(true)
             SendNUIMessage({
                 active = active,
                 positions = playerPositions
@@ -59,6 +57,17 @@ function NPlayerSelector:activate()
         end
     end)
 end
+
+Citizen.CreateThread(function ()
+    while true do
+        if active then
+            DisableAllControlActions(0)
+            EnableControlAction(0, `INPUT_PUSH_TO_TALK`, true)
+            DisablePlayerFiring(PlayerId(), true)
+        end
+        Wait(1)
+    end
+end)
 
 RegisterNUICallback('closeSelector', function (data, cb)
     cb({})
