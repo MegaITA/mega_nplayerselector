@@ -5,10 +5,7 @@ class PlayerSelector extends HTMLElement {
         this._id = _id;
         this._x = _x;
         this._y = _y;
-
         this.create();
-
-        
     }
     
     create() {
