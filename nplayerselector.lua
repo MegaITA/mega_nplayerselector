@@ -4,15 +4,15 @@ NPlayerSelector.range = 9999
 NPlayerSelector.callback = nil
 
 function NPlayerSelector:setRange(val) 
-    self.range = val
+    NPlayerSelector.range = val
 end
 
 function NPlayerSelector:getRange()
-    return self.range
+    return NPlayerSelector.range
 end
 
 function NPlayerSelector:onPlayerSelected(fn) 
-    self.callback = fn
+    NPlayerSelector.callback = fn
 end
 
 function NPlayerSelector:activate()
@@ -26,7 +26,7 @@ function NPlayerSelector:activate()
             for k,v in pairs(players) do
                 local player = GetPlayerPed(v)
                 local coords = GetEntityCoords(player)
-                if #(coords - playerPos) <= self.range then
+                if #(coords - playerPos) <= NPlayerSelector.range then
                     local success, x, y = GetScreenCoordFromWorldCoord(coords.x, coords.y, coords.z)
                     table.insert(playerPositions, { 
                         id = GetPlayerServerId(v), 
